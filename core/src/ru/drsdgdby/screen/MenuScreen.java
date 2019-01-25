@@ -1,80 +1,104 @@
 package ru.drsdgdby.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.drsdgdby.base.BaseScreen;
+import ru.drsdgdby.math.Rect;
+import ru.drsdgdby.sprite.Background;
+import ru.drsdgdby.sprite.ExitButton;
+import ru.drsdgdby.sprite.Star;
+import ru.drsdgdby.sprite.StartButton;
 
 public class MenuScreen extends BaseScreen {
+    private Game game;
     private Texture bgd;
-    private Texture ship;
-    private Vector2 pos, touchPos, dst, buf;
+    private TextureAtlas atlas;
+    private Background background;
+    private StartButton startButton;
+    private ExitButton exitButton;
+    private Star star[];
+
+    public MenuScreen(Game game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
-//        Gdx.input.setInputProcessor(this);
         super.show();
-        bgd = new Texture("brd.jpg");
-        ship = new Texture("frog.png");
-        pos = new Vector2(-0.05f, -0.05f);
-        touchPos = new Vector2();
-        dst = new Vector2();
-        buf = new Vector2();
-
+        bgd = new Texture("textures/brd.jpg");
+        atlas = new TextureAtlas("textures/menuAtlas.tpack");
+        background = new Background(new TextureRegion(bgd));
+        startButton = new StartButton(atlas, game);
+        exitButton = new ExitButton(atlas);
+        /*star = new Star[32];
+        for (int i = 0; i < star.length; i++) {
+            star[i] = new Star(atlas);
+        }*/
     }
 
-    /*float width = Gdx.graphics.getWidth();
-    float height = Gdx.graphics.getHeight();*/
     @Override
     public void render(float delta) {
+        super.render(delta);
+        update(delta);
+        draw();
+    }
+
+    public void update(float delta) {
+        startButton.update(delta);
+        exitButton.update(delta);
+        /*for (Star s : star) {
+            s.update(delta);
+        }*/
+    }
+
+    public void draw() {
+        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(bgd, -0.5f, -0.5f, 1f, 1f);
-        batch.draw(ship, pos.x, pos.y, 0.1f, 0.1f);
+        background.draw(batch);
+        startButton.draw(batch);
+        exitButton.draw(batch);
+        /*for (Star s : star) {
+            s.draw(batch);
+        }*/
         batch.end();
+    }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            pos.x -= 0.5f * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            pos.x += 0.5f * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            pos.y += 0.5f * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            pos.y -= 0.5f * Gdx.graphics.getDeltaTime();
-
-        if (Gdx.input.isTouched()) {
-            buf.set(touchPos);
-            if (buf.sub(pos).len() > 0.01f) {
-                pos.add(dst);
-            }
-        }
-
-        if (pos.x >= 0.5f) {
-            pos.set(-0.49f, pos.y);
-        }
-        if (pos.y >= 0.5f) {
-            pos.set(pos.x, -0.49f);
-        }
-        if (pos.x <= -0.5f) {
-            pos.set(0.5f, pos.y);
-        }
-        if (pos.y <= -0.5f) {
-            pos.set(pos.x, 0.5f); // сеттится только в 2 из 4 сторон
-        }
+    @Override
+    public void resize(Rect worldBounds) {
+        background.resize(worldBounds);
+        startButton.resize(worldBounds);
+        exitButton.resize(worldBounds);
+        /*for (Star s : star) {
+            s.resize(worldBounds);
+        }*/
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        this.touchPos.set(touch);
-        dst.set(touch.sub(pos).setLength(0.01f));
+        game.setScreen(new GameScreen());
+        startButton.touchDown(touch, pointer);
+        exitButton.touchDown(touch, pointer);
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer) {
+        startButton.touchUp(touch, pointer);
+        exitButton.touchUp(touch, pointer);
         return false;
     }
 
     @Override
     public void dispose() {
         bgd.dispose();
-        ship.dispose();
+        atlas.dispose();
         super.dispose();
     }
 }
