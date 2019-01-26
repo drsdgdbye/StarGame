@@ -8,8 +8,10 @@ import ru.drsdgdby.StarGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.height = 600;
-		config.width = 600;
+        float aspect = 3f / 4f;
+        config.width = 400;
+        config.height = (int) (config.width / aspect);
+        config.resizable = false;
 		config.vSyncEnabled = true;
 		new LwjglApplication(new StarGame(), config);
 	}
