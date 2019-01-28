@@ -1,20 +1,15 @@
-package ru.drsdgdby.sprite;
+package ru.drsdgdby.sprite.menu;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.drsdgdby.math.Rect;
-import ru.drsdgdby.screen.GameScreen;
-import ru.drsdgdby.sprite.menu.ScealedTouchUpButton;
 
-public class StartButton extends ScealedTouchUpButton {
-    private Game game;
-
-    public StartButton(TextureAtlas atlas, Game game) {
-        super(atlas.findRegion("btPlay"));
+public class ExitButton extends ScealedTouchUpButton {
+    public ExitButton(TextureAtlas atlas) {
+        super(atlas.findRegion("btExit"));
         setHeightProportion(0.1f);
-        this.game = game;
     }
 
     @Override
@@ -29,11 +24,12 @@ public class StartButton extends ScealedTouchUpButton {
 
     @Override
     protected void action() {
-        game.setScreen(new GameScreen());
+        Gdx.app.exit();
     }
 
     @Override
     public void resize(Rect worldBounds) {
-        pos.set(0, worldBounds.getHalfHeight() / 2);
+        setBottom(worldBounds.getBottom() + 0.02f);
+        setLeft(worldBounds.getLeft() + 0.02f);
     }
 }
