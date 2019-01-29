@@ -1,6 +1,8 @@
 package ru.drsdgdby.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,19 +23,24 @@ public class GameScreen extends BaseScreen {
     private Star star[];
     private MainShip mainShip;
     private BulletPool bulletPool;
+    private Music music;
+    private Sound shootSound;
 
     @Override
     public void show() {
         super.show();
         bgd = new Texture("textures/brd.jpg");
         background = new Background(new TextureRegion(bgd));
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/gametrack_1.mp3"));
+        music.play();
+        shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laserfire02.ogg"));
         gameAtlas = new TextureAtlas("textures/gamescreenatlas.pack");
         star = new Star[32];
         for (int i = 0; i < star.length; i++) {
             star[i] = new Star(gameAtlas);
         }
         bulletPool = new BulletPool();
-        mainShip = new MainShip(gameAtlas, bulletPool);
+        mainShip = new MainShip(gameAtlas, bulletPool, shootSound);
     }
 
     @Override
@@ -104,6 +111,8 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        music.dispose();
+        shootSound.dispose();
         bgd.dispose();
         gameAtlas.dispose();
         bulletPool.dispose();

@@ -1,6 +1,7 @@
 package ru.drsdgdby.sprite.game;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -17,11 +18,13 @@ public class MainShip extends Sprite {
     private Rect worldBounds;
     private BulletPool bulletPool;
     private TextureRegion bulletRegion;
+    private Sound sound;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound sound) {
         super(atlas.findRegion("player"));
         this.bulletRegion = atlas.findRegion("laserGreenShot");
         this.bulletPool = bulletPool;
+        this.sound = sound;
         setHeightProportion(0.15f);
     }
 
@@ -55,6 +58,7 @@ public class MainShip extends Sprite {
                 break;
             case Input.Keys.UP:
                 shoot();
+                sound.play();
                 break;
         }
         return false;

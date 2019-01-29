@@ -2,6 +2,7 @@ package ru.drsdgdby.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,6 +22,7 @@ public class MenuScreen extends BaseScreen {
     private Background background;
     private StartButton startButton;
     private ExitButton exitButton;
+    private Music music;
 
     public MenuScreen(Game game) {
         this.game = game;
@@ -32,7 +34,9 @@ public class MenuScreen extends BaseScreen {
         bgd = new Texture("textures/brd.jpg");
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
         background = new Background(new TextureRegion(bgd));
-        startButton = new StartButton(atlas, game);
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_0.mp3"));
+        music.play();
+        startButton = new StartButton(atlas, game, music);
         exitButton = new ExitButton(atlas);
     }
 
@@ -76,6 +80,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        music.dispose();
         bgd.dispose();
         atlas.dispose();
         super.dispose();
