@@ -12,7 +12,7 @@ public class Star extends Sprite {
     private Rect worldBounds;
 
     public Star(TextureAtlas atlas) {
-        super(atlas.findRegion("starSmall"));
+        super(atlas.findRegion("star"));
         setHeightProportion(Rnd.nextFloat(0.005f, 0.01f));
         if (this.getHeight() <= 0.007f) {
             v.set(Rnd.nextFloat(-0.005f, 0.005f), Rnd.nextFloat(-0.2f, -0.1f));

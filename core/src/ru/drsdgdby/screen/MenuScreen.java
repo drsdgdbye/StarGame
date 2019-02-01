@@ -15,6 +15,8 @@ import ru.drsdgdby.sprite.Background;
 import ru.drsdgdby.sprite.menu.ExitButton;
 import ru.drsdgdby.sprite.menu.StartButton;
 
+//TODO сделать затухание музыки по таймеру
+//TODO сделать затемнение экрана при переходе
 public class MenuScreen extends BaseScreen {
     private Game game;
     private Texture bgd;
@@ -32,13 +34,14 @@ public class MenuScreen extends BaseScreen {
     public void show() {
         super.show();
         bgd = new Texture("textures/brd.jpg");
-        atlas = new TextureAtlas("textures/menuAtlas.tpack");
+        atlas = new TextureAtlas("textures/menuButtons.tpack");
         background = new Background(new TextureRegion(bgd));
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_0.mp3"));
         music.play();
         startButton = new StartButton(atlas, game, music);
         exitButton = new ExitButton(atlas);
     }
+
 
     @Override
     public void render(float delta) {

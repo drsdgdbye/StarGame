@@ -64,7 +64,7 @@ public class Sprite extends Rect {
         );
     }
 
-    public void resize(Rect worlBounds) {
+    public void resize(Rect worldBounds) {
 
     }
 

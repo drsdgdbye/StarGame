@@ -11,12 +11,31 @@ import ru.drsdgdby.screen.GameScreen;
 public class StartButton extends ScealedTouchUpButton {
     private Game game;
     private Music music;
+    private float volumeTimer;
 
     public StartButton(TextureAtlas atlas, Game game, Music music) {
-        super(atlas.findRegion("btExit"));
+        super(atlas.findRegion("PlayButton"));
         setHeightProportion(0.15f);
         this.game = game;
         this.music = music;
+        this.volumeTimer = 1f;
+    }
+
+
+    public void dampingVolume(float delta) {
+        volumeTimer += delta;
+        if (volumeTimer >= 0.2f && volumeTimer < 0.4f) {
+            music.setVolume(0.7f);
+        }
+        if (volumeTimer >= 0.4f && volumeTimer < 0.6f) {
+            music.setVolume(0.5f);
+        }
+        if (volumeTimer >= 0.6f && volumeTimer < 0.8f) {
+            music.setVolume(0.3f);
+        }
+        if (volumeTimer >= 0.8f && volumeTimer < 1f) {
+            music.stop();
+        }
     }
 
     @Override

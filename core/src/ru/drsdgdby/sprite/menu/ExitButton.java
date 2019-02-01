@@ -8,7 +8,7 @@ import ru.drsdgdby.math.Rect;
 
 public class ExitButton extends ScealedTouchUpButton {
     public ExitButton(TextureAtlas atlas) {
-        super(atlas.findRegion("btExit"));
+        super(atlas.findRegion("QuitButton"));
         setHeightProportion(0.1f);
     }
 
