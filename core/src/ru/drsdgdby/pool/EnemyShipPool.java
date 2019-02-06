@@ -6,26 +6,28 @@ import com.badlogic.gdx.audio.Sound;
 import ru.drsdgdby.base.SpritesPool;
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.sprite.game.EnemyShip;
+import ru.drsdgdby.sprite.game.MainShip;
 
 //TODO поменять звук вражеского выстрела
 public class EnemyShipPool extends SpritesPool<EnemyShip> {
     private Rect worldBounds;
     private Sound shootSound;
     private BulletPool bulletPool;
+    private ExplosionPool explosionPool;
+    private MainShip mainShip;
 
-    public EnemyShipPool(BulletPool bulletPool) {
+    public EnemyShipPool(BulletPool bulletPool, Rect worldBounds, ExplosionPool explosionPool, MainShip mainShip) {
+        this.mainShip = mainShip;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laserfire02.ogg"));
         this.bulletPool = bulletPool;
-
-    }
-
-    public void resize(Rect worldBounds) {
+        this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
+
     }
 
     @Override
     protected EnemyShip newObject() {
-        return new EnemyShip(shootSound, bulletPool, worldBounds);
+        return new EnemyShip(shootSound, bulletPool, worldBounds, explosionPool, mainShip);
     }
 
     @Override

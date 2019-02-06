@@ -6,13 +6,18 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.pool.BulletPool;
+import ru.drsdgdby.pool.ExplosionPool;
 
 public class EnemyShip extends Ship {
-    private Rect worldBounds;
+    private State state;
+    private Vector2 descentV = new Vector2(0, -0.15f);
+    private MainShip mainShip;
     private Vector2 v0 = new Vector2();
 
-    public EnemyShip(Sound shootSound, BulletPool bulletPool, Rect worldBounds) {
+    public EnemyShip(Sound shootSound, BulletPool bulletPool, Rect worldBounds, ExplosionPool explosionPool, MainShip mainShip) {
         super();
+        this.mainShip = mainShip;
+        this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
         this.shootSound = shootSound;
         this.bulletPool = bulletPool;
@@ -25,8 +30,24 @@ public class EnemyShip extends Ship {
     public void update(float delta) {
         super.update(delta);
         this.pos.mulAdd(v, delta);
-        if (isOutside(worldBounds)) {
-            destroy();
+        switch (state) {
+            case DESCENT:
+                if (getTop() <= worldBounds.getTop()) {
+                    v.set(v0);
+                    state = State.FIGHT;
+                }
+                break;
+            case FIGHT:
+                reloadTimer += delta;
+                if (reloadTimer >= reloadInterval) {
+                    reloadTimer = 0f;
+                    shoot();
+                }
+                if (getBottom() < worldBounds.getBottom()) {
+                    mainShip.damage(this.damage);
+                    destroy();
+                }
+                break;
         }
     }
 
@@ -51,7 +72,22 @@ public class EnemyShip extends Ship {
         setHeightProportion(height);
         this.hp = hp;
         reloadTimer = reloadInterval;
-        v.set(v0);
+        v.set(descentV);
+        state = State.DESCENT;
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        boom();
+    }
+
+    public boolean isBulletCollision(Rect bullet) {
+        return !(bullet.getRight() < getLeft() ||
+                bullet.getLeft() > getRight() ||
+                bullet.getBottom() > getTop() ||
+                bullet.getTop() < pos.y);
+    }
+
+    private enum State {DESCENT, FIGHT}
 }
