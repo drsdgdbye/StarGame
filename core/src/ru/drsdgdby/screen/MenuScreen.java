@@ -2,6 +2,7 @@ package ru.drsdgdby.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,10 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 import ru.drsdgdby.base.BaseScreen;
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.sprite.Background;
-import ru.drsdgdby.sprite.ExitButton;
-import ru.drsdgdby.sprite.Star;
-import ru.drsdgdby.sprite.StartButton;
+import ru.drsdgdby.sprite.menu.ExitButton;
+import ru.drsdgdby.sprite.menu.StartButton;
 
+//TODO сделать затухание музыки по таймеру
+//TODO сделать затемнение экрана при переходе
 public class MenuScreen extends BaseScreen {
     private Game game;
     private Texture bgd;
@@ -22,7 +24,7 @@ public class MenuScreen extends BaseScreen {
     private Background background;
     private StartButton startButton;
     private ExitButton exitButton;
-    private Star star[];
+    private Music music;
 
     public MenuScreen(Game game) {
         this.game = game;
@@ -32,29 +34,19 @@ public class MenuScreen extends BaseScreen {
     public void show() {
         super.show();
         bgd = new Texture("textures/brd.jpg");
-        atlas = new TextureAtlas("textures/menuAtlas.tpack");
+        atlas = new TextureAtlas("textures/menuButtons.tpack");
         background = new Background(new TextureRegion(bgd));
-        startButton = new StartButton(atlas, game);
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_0.mp3"));
+        music.play();
+        startButton = new StartButton(atlas, game, music);
         exitButton = new ExitButton(atlas);
-        /*star = new Star[32];
-        for (int i = 0; i < star.length; i++) {
-            star[i] = new Star(atlas);
-        }*/
     }
+
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        update(delta);
         draw();
-    }
-
-    public void update(float delta) {
-        startButton.update(delta);
-        exitButton.update(delta);
-        /*for (Star s : star) {
-            s.update(delta);
-        }*/
     }
 
     public void draw() {
@@ -64,9 +56,6 @@ public class MenuScreen extends BaseScreen {
         background.draw(batch);
         startButton.draw(batch);
         exitButton.draw(batch);
-        /*for (Star s : star) {
-            s.draw(batch);
-        }*/
         batch.end();
     }
 
@@ -75,14 +64,11 @@ public class MenuScreen extends BaseScreen {
         background.resize(worldBounds);
         startButton.resize(worldBounds);
         exitButton.resize(worldBounds);
-        /*for (Star s : star) {
-            s.resize(worldBounds);
-        }*/
+
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        game.setScreen(new GameScreen());
         startButton.touchDown(touch, pointer);
         exitButton.touchDown(touch, pointer);
         return false;
@@ -97,6 +83,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        music.dispose();
         bgd.dispose();
         atlas.dispose();
         super.dispose();
