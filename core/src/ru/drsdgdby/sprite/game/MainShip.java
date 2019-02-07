@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.pool.BulletPool;
+import ru.drsdgdby.pool.ExplosionPool;
 
 
 public class MainShip extends Ship {
@@ -17,17 +18,18 @@ public class MainShip extends Ship {
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("playerShip1_orange"));
         this.bulletRegion = atlas.findRegion("laserGreen");
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laserfire02.ogg"));
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.reloadInterval = 0.2f;
-        setHeightProportion(0.15f);
+        setHeightProportion(0.1f);
         this.bulletV = new Vector2(0, 0.5f);
         this.bulletHeight = 0.01f;
         this.damage = 1;
-        this.hp = 100;
+        this.hp = 10;
     }
 
     @Override
@@ -69,9 +71,6 @@ public class MainShip extends Ship {
                 isPressedRight = true;
                 moveRight();
                 break;
-            /*case Input.Keys.UP: //оставил, вдруг не понравится автоматическая стрельба.
-                shoot();
-                break;*/
         }
         return false;
     }
@@ -142,5 +141,16 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
+    public boolean isBulletCollision(Rect bullet) {
+        return !(bullet.getRight() < getLeft() ||
+                bullet.getLeft() > getRight() ||
+                bullet.getBottom() > pos.y ||
+                bullet.getTop() < getBottom());
+    }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        boom();
+    }
 }

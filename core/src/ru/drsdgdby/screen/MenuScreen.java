@@ -37,7 +37,7 @@ public class MenuScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/menuButtons.tpack");
         background = new Background(new TextureRegion(bgd));
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_0.mp3"));
-        music.play();
+//        music.play();
         startButton = new StartButton(atlas, game, music);
         exitButton = new ExitButton(atlas);
     }
