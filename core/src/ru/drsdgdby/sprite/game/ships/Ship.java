@@ -1,4 +1,4 @@
-package ru.drsdgdby.sprite.game;
+package ru.drsdgdby.sprite.game.ships;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,6 +8,8 @@ import ru.drsdgdby.base.Sprite;
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.pool.BulletPool;
 import ru.drsdgdby.pool.ExplosionPool;
+import ru.drsdgdby.sprite.game.Bullet;
+import ru.drsdgdby.sprite.game.Explosion;
 
 public class Ship extends Sprite {
     protected Sound shootSound;
@@ -47,16 +49,21 @@ public class Ship extends Sprite {
     }
 
     public void damage(int damage) {
-//        frame = 1; //фрейм у нас один
+        frame = 1;
         damageTimer = 0f;
         hp -= damage;
         if (hp <= 0) {
+            hp = 0;
             destroy();
         }
     }
 
     public int getDamage() {
         return damage;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     @Override
@@ -66,7 +73,7 @@ public class Ship extends Sprite {
     }
 
     public void shoot() {
-//        shootSound.play();
+        shootSound.play();
         Bullet bullet = bulletPool.obtain();
         bullet.set(this,
                 bulletRegion,

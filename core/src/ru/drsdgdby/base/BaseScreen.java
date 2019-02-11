@@ -12,13 +12,16 @@ import ru.drsdgdby.math.MatrixUtils;
 import ru.drsdgdby.math.Rect;
 
 public class BaseScreen implements Screen, InputProcessor {
+    protected static final String FRAGS = "FRAGS: ";
+    protected static final String HP = "HP: ";
+    protected static final String LEVEL = "LEVEL: ";
     protected SpriteBatch batch;
-    private Rect screenBounds; // границы области рисования в пикселях.
-    protected Rect worldBounds; // границы проекции мировых координат.
-    private Rect glBounds; // дефолтные границы проекции мир-gl.
+    protected Rect worldBounds;
+    private Rect screenBounds;
+    private Rect glBounds;
 
-    private Matrix4 worldToGl; // переводит мировые координаты в gl.
-    private Matrix3 screenToWorld; // переводит локальные координаты в мировые.
+    private Matrix4 worldToGl;
+    private Matrix3 screenToWorld;
 
     private Vector2 touch;
 

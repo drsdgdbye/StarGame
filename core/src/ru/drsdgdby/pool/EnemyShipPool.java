@@ -5,8 +5,8 @@ import com.badlogic.gdx.audio.Sound;
 
 import ru.drsdgdby.base.SpritesPool;
 import ru.drsdgdby.math.Rect;
-import ru.drsdgdby.sprite.game.EnemyShip;
-import ru.drsdgdby.sprite.game.MainShip;
+import ru.drsdgdby.sprite.game.ships.EnemyShip;
+import ru.drsdgdby.sprite.game.ships.MainShip;
 
 //TODO поменять звук вражеского выстрела
 public class EnemyShipPool extends SpritesPool<EnemyShip> {

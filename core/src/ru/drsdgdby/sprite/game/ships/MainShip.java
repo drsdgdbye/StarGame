@@ -1,4 +1,4 @@
-package ru.drsdgdby.sprite.game;
+package ru.drsdgdby.sprite.game.ships;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,9 +17,11 @@ public class MainShip extends Ship {
     private boolean isPressedRight;
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
+    private Rect worldBounds;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
-        super(atlas.findRegion("playerShip1_orange"));
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
+        super(atlas.findRegion("mainShip"), 1, 2, 2);
+        this.worldBounds = worldBounds;
         this.bulletRegion = atlas.findRegion("laserGreen");
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laserfire02.ogg"));
         this.bulletPool = bulletPool;
@@ -29,7 +31,14 @@ public class MainShip extends Ship {
         this.bulletV = new Vector2(0, 0.5f);
         this.bulletHeight = 0.01f;
         this.damage = 1;
+        startNewGame();
+    }
+
+    public void startNewGame() {
+        stop();
+        pos.x = worldBounds.pos.x;
         this.hp = 10;
+        flushDestroy();
     }
 
     @Override
@@ -42,11 +51,11 @@ public class MainShip extends Ship {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v, delta);
-        reloadTimer += delta;
+        /*reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {
             reloadTimer = 0f;
             shoot();
-        }
+        }*/
         checkBoundsAndChangeRoute();
     }
 
@@ -70,6 +79,9 @@ public class MainShip extends Ship {
             case Input.Keys.RIGHT:
                 isPressedRight = true;
                 moveRight();
+                break;
+            case Input.Keys.SPACE:
+                shoot();
                 break;
         }
         return false;
@@ -137,7 +149,7 @@ public class MainShip extends Ship {
         v.set(v0).rotate(180);
     }
 
-    private void stop() {
+    public void stop() {
         v.setZero();
     }
 
@@ -153,4 +165,5 @@ public class MainShip extends Ship {
         super.destroy();
         boom();
     }
+
 }

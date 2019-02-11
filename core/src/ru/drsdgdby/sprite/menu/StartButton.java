@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
+import ru.drsdgdby.base.ScealedTouchUpButton;
 import ru.drsdgdby.math.Rect;
 import ru.drsdgdby.screen.GameScreen;
 
@@ -13,8 +14,8 @@ public class StartButton extends ScealedTouchUpButton {
     private Music music;
 
     public StartButton(TextureAtlas atlas, Game game, Music music) {
-        super(atlas.findRegion("PlayButton"));
-        setHeightProportion(0.15f);
+        super(atlas.findRegion("play"));
+        setHeightProportion(0.25f);
         this.game = game;
         this.music = music;
     }

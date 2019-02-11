@@ -1,4 +1,4 @@
-package ru.drsdgdby.sprite.game;
+package ru.drsdgdby.sprite.game.ships;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,9 +43,8 @@ public class EnemyShip extends Ship {
                     reloadTimer = 0f;
                     shoot();
                 }
-                if (getBottom() < worldBounds.getBottom()) {
-                    mainShip.damage(this.damage);
-                    destroy();
+                if (getTop() < worldBounds.getBottom()) {
+                    super.destroy();
                 }
                 break;
         }
