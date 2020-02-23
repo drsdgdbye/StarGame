@@ -1,0 +1,40 @@
+
+menuButtons1.png
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+no
+  rotate: false
+  xy: 1, 1
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 403, 1
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 805, 1
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+prev
+  rotate: false
+  xy: 1207, 1
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+restart
+  rotate: false
+  xy: 1609, 1
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1

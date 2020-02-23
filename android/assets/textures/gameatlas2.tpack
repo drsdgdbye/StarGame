@@ -1,0 +1,68 @@
+
+gameatlas2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+explosion
+  rotate: false
+  xy: 1, 362
+  size: 990, 89
+  orig: 990, 89
+  offset: 0, 0
+  index: -1
+gameover
+  rotate: false
+  xy: 1, 164
+  size: 370, 196
+  orig: 370, 196
+  offset: 0, 0
+  index: -1
+enemyGreen
+  rotate: false
+  xy: 1, 78
+  size: 206, 84
+  orig: 206, 84
+  offset: 0, 0
+  index: -1
+enemyRed
+  rotate: false
+  xy: 373, 276
+  size: 206, 84
+  orig: 206, 84
+  offset: 0, 0
+  index: -1
+mainShip
+  rotate: false
+  xy: 1, 1
+  size: 198, 75
+  orig: 198, 75
+  offset: 0, 0
+  index: -1
+enemyBlue
+  rotate: false
+  xy: 373, 190
+  size: 186, 84
+  orig: 186, 84
+  offset: 0, 0
+  index: -1
+laserGreen
+  rotate: false
+  xy: 209, 125
+  size: 37, 37
+  orig: 37, 37
+  offset: 0, 0
+  index: -1
+laserRed
+  rotate: false
+  xy: 581, 324
+  size: 37, 36
+  orig: 37, 36
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 993, 427
+  size: 25, 24
+  orig: 25, 24
+  offset: 0, 0
+  index: -1

@@ -1,9 +1,7 @@
-package ru.drsdgdby.sprite.menu;
+package ru.drsdgdby.base;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
-import ru.drsdgdby.base.Sprite;
 
 public class ScealedTouchUpButton extends Sprite {
     private static final float PRESS_SCALE = 0.9f;
@@ -19,6 +17,7 @@ public class ScealedTouchUpButton extends Sprite {
         if (isPressed || !isMe(touch)) {
             return false;
         }
+
         this.pointer = pointer;
         this.scale = PRESS_SCALE;
         this.isPressed = true;
